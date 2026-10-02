@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <title>ARMIN OS 0.1</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">PERSONAL OPERATING SYSTEM</div>
+        <h1>ARMIN OS</h1>
+        <p class="sub">مرکز فرماندهی زندگی، رشد و پروژه ربات</p>
+      </div>
+      <div class="badge">v0.1</div>
+    </header>
+
+    <section class="hero card">
+      <div>
+        <p class="eyebrow">امروز</p>
+        <h2 id="today"></h2>
+        <p id="focusText">فقط قدم بعدی را انجام بده.</p>
+      </div>
+      <button id="focusBtn" class="primary">تمرکز امروز</button>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3>🎯 سه کار اصلی</h3>
+        <div id="tasks" class="list"></div>
+        <div class="row">
+          <input id="taskInput" maxlength="80" placeholder="یک کار مهم..." aria-label="کار مهم">
+          <button id="addTask" class="secondary">افزودن</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>🧠 وضعیت</h3>
+        <label>انرژی <input id="energy" type="range" min="1" max="10" value="5"></label>
+        <div class="metric"><span id="energyValue">5/10</span><span>انرژی</span></div>
+        <label>حال امروز <input id="mood" type="range" min="1" max="10" value="5"></label>
+        <div class="metric"><span id="moodValue">5/10</span><span>حال</span></div>
+      </article>
+
+      <article class="card">
+        <h3>🔧 مسیر ربات</h3>
+        <p>قدم فعلی: ساخت پایه‌ی سیستم و ثبت عملکرد روزانه.</p>
+        <div class="progress"><span style="width:10%"></span></div>
+        <small>نسخه‌های بعدی: یادگیری، پروژه، مالی، یادآوری و اتصال AI</small>
+      </article>
+
+      <article class="card">
+        <h3>📝 گزارش سریع</h3>
+        <textarea id="note" rows="5" placeholder="امروز چه اتفاقی افتاد؟"></textarea>
+        <button id="saveNote" class="secondary full">ذخیره گزارش</button>
+        <p id="saved" class="saved"></p>
+      </article>
+    </section>
+
+    <footer>ساخته‌شده برای مسیر شخصی آرمین — داده‌های این نسخه در همین مرورگر ذخیره می‌شوند.</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
