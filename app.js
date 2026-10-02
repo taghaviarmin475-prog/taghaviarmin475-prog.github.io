@@ -1,5 +1,5 @@
 var $=function(s){return document.querySelector(s)};
-var storeKey='armin-os-v04';
+var storeKey='armin-os-v06';
 var state;
 try{state=JSON.parse(localStorage.getItem(storeKey)||'{}')}catch(e){state={}}
 state.tasks=state.tasks||[];
@@ -18,6 +18,13 @@ state.dayType=state.dayType||'day';
 state.sleepTime=state.sleepTime||'22:45';
 state.wakeTime=state.wakeTime||'06:00';
 state.note=state.note||{};
+state.events=state.events||[];
+state.hunger=state.hunger||5;
+state.thirst=state.thirst||5;
+state.waterMl=state.waterMl||0;
+state.dayKey=state.dayKey||new Date().toISOString().slice(0,10);
+var todayKey=new Date().toISOString().slice(0,10);
+if(state.dayKey!==todayKey){state.dayKey=todayKey;state.tasks=[];state.energy=5;state.mood=5;state.sleepHours=7;state.learnMin=0;state.robotMin=0;state.spendTotal=0;state.waterMl=0;state.cigarettes=0;state.bowel='0';state.stool='hard';state.giPain='0';state.events=[];state.note={};state.hunger=5;state.thirst=5;}
 
 function save(){localStorage.setItem(storeKey,JSON.stringify(state))}
 function updateMeters(){
@@ -26,14 +33,50 @@ function updateMeters(){
  $('#learnBar').style.width=Math.min(100,(state.learnMin/60)*100)+'%';
  $('#robotBar').style.width=Math.min(100,(state.robotMin/60)*100)+'%';
  $('#spendTotal').textContent=Number(state.spendTotal).toLocaleString('fa-IR');
- $('#waterCount').textContent=state.waterCount.toLocaleString('fa-IR');
+ $('#waterCount').textContent=state.waterMl.toLocaleString('fa-IR');
  $('#cigaretteTotal').textContent=state.cigarettes.toLocaleString('fa-IR');
+ $('#hunger').value=state.hunger;$('#thirst').value=state.thirst;
+ renderEvents();
  var advice='فعلاً وضعیتت متوسط است؛ برنامه را سبک و پایدار نگه دار.';
  if(state.sleepHours<7){advice='خواب کم ثبت شده؛ امروز اولویت با غذا، آب و ریکاوری است.'}
  else if(state.energy<=4){advice='انرژی پایین است؛ امروز کار اصلی + تغذیه منظم + حداکثر 10 دقیقه یادگیری کافی است.'}
  else if(state.energy>=8 && state.sleepHours>=7){advice='انرژی خوب است؛ 20–30 دقیقه یادگیری یا ربات مناسب است.'}
  if(state.cigarettes>0){advice+=' سیگار را فعلاً فقط ثبت کن؛ بعداً برنامه کاهش/ترک را مرحله‌ای می‌سازیم.'}
  $('#energyAdvice').textContent=advice;
+}
+function renderEvents(){
+ var box=$('#eventLog');if(!box)return;box.innerHTML='';
+ if(!state.events.length){box.innerHTML='<p class="muted small">هنوز ثبت سریع انجام نشده.</p>';return}
+ state.events.slice(-8).reverse().forEach(function(ev){
+  var d=document.createElement('div');d.className='event-row';
+  d.innerHTML='<b></b><span></span><small></small>';
+  d.querySelector('b').textContent=ev.time+' — '+ev.event;
+  d.querySelector('span').textContent='انرژی '+ev.energy+'/10 | گرسنگی '+ev.hunger+'/10 | تشنگی '+ev.thirst+'/10 | آب '+ev.waterMl+'ml';
+  d.querySelector('small').textContent=ev.cigarettes+' نخ سیگار';
+  box.appendChild(d);
+ });
+}
+function logEvent(eventName){
+ var now=new Date();
+ var time=new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit'}).format(now);
+ state.events.push({time:time,event:eventName,energy:state.energy,hunger:state.hunger,thirst:state.thirst,waterMl:state.waterMl,cigarettes:state.cigarettes});
+ save();renderEvents();
+}
+function buildReport(){
+ var dateFa=new Intl.DateTimeFormat('fa-IR',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date());
+ var tasksDone=state.tasks.filter(function(t){return t.done}).length;
+ var tasksAll=state.tasks.length;
+ var events=state.events.map(function(e){return e.time+' | '+e.event+' | انرژی '+e.energy+'/10 | گرسنگی '+e.hunger+'/10 | تشنگی '+e.thirst+'/10 | آب '+e.waterMl+'ml | سیگار '+e.cigarettes+' نخ'}).join('\n')||'ثبت نشده';
+ return 'گزارش ARMIN OS — '+dateFa+'\n'+
+ 'شیفت شرکت: 07:40 ورود | 08:00 شروع تولید | 10:00 استراحت | 12:45 ناهار | 15:00 استراحت | 17:00 پایان/نظافت\n'+
+ 'خواب: '+state.sleepHours+' ساعت | انرژی پایان/فعلی: '+state.energy+'/10 | حال: '+state.mood+'/10\n'+
+ 'آب: '+state.waterMl+' ml | سیگار: '+state.cigarettes+' نخ\n'+
+ 'گوارش: دفع='+state.bowel+' | مدفوع='+state.stool+' | نفخ/درد='+state.giPain+'\n'+
+ 'غذا: صبحانه='+!!state.breakfast+' | ناهار='+!!state.lunch+' | شام='+!!state.dinner+' | میوه='+!!state.fruit+' | سبزی='+!!state.veg+' | پروتئین='+!!state.protein+'\n'+
+ 'رشد: یادگیری '+state.learnMin+' دقیقه | ربات '+state.robotMin+' دقیقه\n'+
+ 'کارها: '+tasksDone+'/'+tasksAll+' انجام شد\n'+
+ 'رویدادها:\n'+events+'\n'+
+ 'گزارش شب: '+(state.note.text||'ثبت نشده');
 }
 function renderTasks(){
  var box=$('#tasks');box.innerHTML='';
@@ -97,16 +140,22 @@ $('#wakeTime').onchange=function(e){state.wakeTime=e.target.value;save();makePla
 $('#energy').oninput=function(e){state.energy=+e.target.value;updateMeters();save()};
 $('#mood').oninput=function(e){state.mood=+e.target.value;updateMeters();save()};
 $('#sleepHours').oninput=function(e){state.sleepHours=Math.max(0,+e.target.value||0);updateMeters();save()};
+$('#hunger').oninput=function(e){state.hunger=+e.target.value;save()};
+$('#thirst').oninput=function(e){state.thirst=+e.target.value;save()};
 $('#learnMin').oninput=function(e){state.learnMin=Math.max(0,+e.target.value||0);updateMeters();save()};
 $('#robotMin').oninput=function(e){state.robotMin=Math.max(0,+e.target.value||0);updateMeters();save()};
-$('#waterPlus').onclick=function(){state.waterCount++;save();updateMeters()};
-$('#waterReset').onclick=function(){state.waterCount=0;save();updateMeters()};
+$('#water100').onclick=function(){state.waterMl+=100;save();updateMeters()};
+$('#water300').onclick=function(){state.waterMl+=300;save();updateMeters()};
+$('#water600').onclick=function(){state.waterMl+=600;save();updateMeters()};
+$('#waterReset').onclick=function(){state.waterMl=0;save();updateMeters()};
 $('#saveCigs').onclick=function(){state.cigarettes=Math.max(0,+$('#cigarettes').value||0);save();updateMeters()};
 $('#bowel').onchange=function(e){state.bowel=e.target.value;save()};
 $('#stool').onchange=function(e){state.stool=e.target.value;save()};
 $('#giPain').onchange=function(e){state.giPain=e.target.value;save()};
 $('#addSpend').onclick=function(){var v=parseFloat(String($('#spendAmount').value).replace(/,/g,''));if(isNaN(v)||v<=0)return;state.spendTotal+=v;$('#spendAmount').value='';updateMeters();save()};
 $('#saveNote').onclick=function(){state.note={text:$('#note').value,date:new Date().toISOString()};save();$('#saved').textContent='گزارش ذخیره شد.';setTimeout(function(){$('#saved').textContent=''},1800)};
+Array.prototype.forEach.call(document.querySelectorAll('.event-btn'),function(btn){btn.onclick=function(){logEvent(btn.getAttribute('data-event'))}});
+$('#exportReport').onclick=function(){var report=buildReport();if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(report).then(function(){$('#saved').textContent='گزارش کامل کپی شد؛ آن را همین‌جا برای ChatGPT بفرست.'}).catch(function(){prompt('گزارش را کپی کن و در ChatGPT بفرست:',report)})}else{prompt('گزارش را کپی کن و در ChatGPT بفرست:',report)}};
 $('#note').value=state.note.text||'';
 $('#cigarettes').value=state.cigarettes;$('#bowel').value=state.bowel;$('#stool').value=state.stool;$('#giPain').value=state.giPain;
 updateMeters();renderTasks();syncChecks();makePlan();
