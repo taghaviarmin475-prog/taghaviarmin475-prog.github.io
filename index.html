@@ -1,67 +1,118 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0f172a">
-  <title>ARMIN OS 0.1</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08111f">
+<meta name="description" content="ARMIN OS - سیستم شخصی مدیریت روز، رشد و پروژه ربات">
+<title>ARMIN OS 0.2</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="shell">
-    <header class="topbar">
-      <div>
-        <div class="eyebrow">PERSONAL OPERATING SYSTEM</div>
-        <h1>ARMIN OS</h1>
-        <p class="sub">مرکز فرماندهی زندگی، رشد و پروژه ربات</p>
-      </div>
-      <div class="badge">v0.1</div>
-    </header>
+<main class="shell">
+<header class="topbar">
+  <div>
+    <div class="eyebrow">PERSONAL OPERATING SYSTEM</div>
+    <h1>ARMIN OS</h1>
+    <p class="sub">مرکز فرماندهی زندگی، رشد و پروژه ربات</p>
+  </div>
+  <div class="badge">v0.2</div>
+</header>
 
-    <section class="hero card">
-      <div>
-        <p class="eyebrow">امروز</p>
-        <h2 id="today"></h2>
-        <p id="focusText">فقط قدم بعدی را انجام بده.</p>
-      </div>
-      <button id="focusBtn" class="primary">تمرکز امروز</button>
-    </section>
+<section class="hero card">
+  <div>
+    <p class="eyebrow">امروز</p>
+    <h2 id="today"></h2>
+    <p id="headline">برنامه‌ات را با واقعیت همان روز تنظیم کن.</p>
+  </div>
+  <div class="hero-actions">
+    <button id="buildPlan" class="primary">برنامه امروز</button>
+    <button id="focusBtn" class="secondary">تمرکز</button>
+  </div>
+</section>
 
-    <section class="grid">
-      <article class="card">
-        <h3>🎯 سه کار اصلی</h3>
-        <div id="tasks" class="list"></div>
-        <div class="row">
-          <input id="taskInput" maxlength="80" placeholder="یک کار مهم..." aria-label="کار مهم">
-          <button id="addTask" class="secondary">افزودن</button>
-        </div>
-      </article>
+<section class="card planner">
+  <div class="section-head">
+    <div>
+      <h3>🧭 وضعیت روز</h3>
+      <p class="muted">شیفت را انتخاب کن تا برنامه پیشنهادی همان روز ساخته شود.</p>
+    </div>
+  </div>
+  <div class="controls">
+    <label>نوع روز
+      <select id="dayType">
+        <option value="day">شیفت روز</option>
+        <option value="night">شیفت شب</option>
+        <option value="off">استراحت / تعطیل</option>
+      </select>
+    </label>
+    <label>ساعت خواب معمول
+      <input id="sleepTime" type="time" value="23:30">
+    </label>
+    <label>زمان بیداری معمول
+      <input id="wakeTime" type="time" value="07:00">
+    </label>
+  </div>
+  <div id="plan" class="plan"></div>
+</section>
 
-      <article class="card">
-        <h3>🧠 وضعیت</h3>
-        <label>انرژی <input id="energy" type="range" min="1" max="10" value="5"></label>
-        <div class="metric"><span id="energyValue">5/10</span><span>انرژی</span></div>
-        <label>حال امروز <input id="mood" type="range" min="1" max="10" value="5"></label>
-        <div class="metric"><span id="moodValue">5/10</span><span>حال</span></div>
-      </article>
+<section class="grid">
+  <article class="card">
+    <h3>🎯 سه کار اصلی</h3>
+    <div id="tasks" class="list"></div>
+    <div class="row">
+      <input id="taskInput" maxlength="80" placeholder="مثلاً: 20 دقیقه تمرین Arduino">
+      <button id="addTask" class="secondary">افزودن</button>
+    </div>
+  </article>
 
-      <article class="card">
-        <h3>🔧 مسیر ربات</h3>
-        <p>قدم فعلی: ساخت پایه‌ی سیستم و ثبت عملکرد روزانه.</p>
-        <div class="progress"><span style="width:10%"></span></div>
-        <small>نسخه‌های بعدی: یادگیری، پروژه، مالی، یادآوری و اتصال AI</small>
-      </article>
+  <article class="card">
+    <h3>🧠 چک‌این</h3>
+    <label>انرژی <input id="energy" type="range" min="1" max="10" value="5"></label>
+    <div class="metric"><span id="energyValue">5/10</span><span>انرژی</span></div>
+    <label>حال امروز <input id="mood" type="range" min="1" max="10" value="5"></label>
+    <div class="metric"><span id="moodValue">5/10</span><span>حال</span></div>
+    <label>کیفیت خواب <input id="sleepQuality" type="range" min="1" max="10" value="5"></label>
+    <div class="metric"><span id="sleepValue">5/10</span><span>خواب</span></div>
+  </article>
 
-      <article class="card">
-        <h3>📝 گزارش سریع</h3>
-        <textarea id="note" rows="5" placeholder="امروز چه اتفاقی افتاد؟"></textarea>
-        <button id="saveNote" class="secondary full">ذخیره گزارش</button>
-        <p id="saved" class="saved"></p>
-      </article>
-    </section>
+  <article class="card">
+    <h3>📚 رشد امروز</h3>
+    <div class="mini-grid">
+      <label>یادگیری (دقیقه)<input id="learnMin" type="number" min="0" max="240" value="20"></label>
+      <label>ربات (دقیقه)<input id="robotMin" type="number" min="0" max="240" value="20"></label>
+    </div>
+    <div class="progress-row"><span>یادگیری</span><div class="progress"><span id="learnBar"></span></div><b id="learnText">20 دقیقه</b></div>
+    <div class="progress-row"><span>ربات</span><div class="progress"><span id="robotBar"></span></div><b id="robotText">20 دقیقه</b></div>
+  </article>
 
-    <footer>ساخته‌شده برای مسیر شخصی آرمین — داده‌های این نسخه در همین مرورگر ذخیره می‌شوند.</footer>
-  </main>
-  <script src="app.js"></script>
+  <article class="card">
+    <h3>💰 خرج امروز</h3>
+    <div class="row">
+      <input id="spendAmount" inputmode="decimal" placeholder="مبلغ">
+      <button id="addSpend" class="secondary">ثبت</button>
+    </div>
+    <p class="big-number" id="spendTotal">0</p>
+    <small>فعلاً فقط برای ثبت سریع خرج‌هاست؛ اتصال به حساب بانکی مرحله بعدی است.</small>
+  </article>
+
+  <article class="card wide">
+    <h3>📝 گزارش شب</h3>
+    <textarea id="note" rows="5" placeholder="امروز چه چیزی خوب پیش رفت؟ چه چیزی گیر داشت؟ فردا اولین قدم چیست؟"></textarea>
+    <button id="saveNote" class="secondary full">ذخیره گزارش</button>
+    <p id="saved" class="saved"></p>
+  </article>
+
+  <article class="card">
+    <h3>🔧 مسیر ربات</h3>
+    <p>مرحله فعلی: ساخت سیستم شخصی و ایجاد عادت اجرای روزانه.</p>
+    <div class="progress"><span style="width:15%"></span></div>
+    <small>بعدی: برنامه یادگیری، پروژه‌های عملی، مدیریت مالی، یادآوری و اتصال AI.</small>
+  </article>
+</section>
+
+<footer>ARMIN OS — نسخه 0.2 | داده‌های این نسخه روی همین مرورگر ذخیره می‌شوند.</footer>
+</main>
+<script src="app.js"></script>
 </body>
 </html>
