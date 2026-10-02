@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#08111f">
 <meta name="description" content="ARMIN OS - مدیریت روز، انرژی، تغذیه، رشد و پروژه ربات">
-<title>ARMIN OS 0.3</title>
+<title>ARMIN OS 0.4</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -89,6 +89,21 @@
   </article>
 
   <article class="card">
+    <h3>🚭 سیگار</h3>
+    <p class="muted">هدف فعلی: ثبت واقعیت، نه سرزنش. بعداً یک برنامه کاهش/ترک مرحله‌ای می‌سازیم.</p>
+    <div class="row"><input id="cigarettes" type="number" min="0" max="80" value="0" placeholder="تعداد امروز"><button id="saveCigs" class="secondary">ثبت</button></div>
+    <p class="big-number" id="cigaretteTotal">0</p>
+  </article>
+
+  <article class="card">
+    <h3>🚽 گوارش</h3>
+    <label>دفع امروز <select id="bowel"><option value="0">هنوز نه</option><option value="1">بله</option></select></label>
+    <label>سفتی مدفوع <select id="stool"><option value="hard">سفت / تکه‌ای</option><option value="normal">نسبتاً طبیعی</option><option value="loose">شل</option></select></label>
+    <label>نفخ/درد <select id="giPain"><option value="0">ندارم</option><option value="1">دارم</option></select></label>
+    <p class="muted small">فیبر را تدریجی بالا می‌بریم و آب را هم همزمان بیشتر می‌کنیم؛ اگر درد مداوم، خون در مدفوع، استفراغ یا کاهش وزن ناخواسته داری، ارزیابی پزشکی لازم است.</p>
+  </article>
+
+  <article class="card">
     <h3>🥗 الگوی غذای فردا</h3>
     <div class="meal"><b>06:20 صبحانه</b><span>تخم‌مرغ + نان سبوس‌دار + خیار/گوجه + یک میوه</span></div>
     <div class="meal"><b>09:30 میان‌وعده</b><span>میوه + ماست یا یک مشت کوچک مغزها</span></div>
@@ -142,7 +157,7 @@
   </article>
 </section>
 
-<footer>ARMIN OS — نسخه 0.3 | اطلاعات روز در همین مرورگر ذخیره می‌شوند.</footer>
+<footer>ARMIN OS — نسخه 0.4 | اطلاعات روز در همین مرورگر ذخیره می‌شوند.</footer>
 </main>
 <script src="app.js"></script>
 </body>
