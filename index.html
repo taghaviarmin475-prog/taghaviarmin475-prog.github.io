@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#08111f">
 <meta name="description" content="ARMIN OS - مدیریت روز، انرژی، تغذیه، رشد و پروژه ربات">
-<title>ARMIN OS 0.5</title>
+<title>ARMIN OS 0.6</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
     <h1>ARMIN OS</h1>
     <p class="sub">مرکز فرماندهی زندگی، انرژی، تغذیه و پروژه ربات</p>
   </div>
-  <div class="badge">v0.5</div>
+  <div class="badge">v0.6</div>
 </header>
 
 <section class="hero card">
@@ -76,11 +76,13 @@
   </article>
 
   <article class="card">
-    <h3>💧 آب</h3>
-    <p class="muted">ثبت ساده؛ هدف اولیه را بعد از چند روز با شرایط بدنی و کاری تنظیم می‌کنیم.</p>
-    <div class="water-number" id="waterCount">0</div>
+    <h3>💧 آب / بطری ۶۰۰ml</h3>
+    <p class="muted">بطری تو تا ۶۰۰ml علامت‌گذاری شده؛ برای ثبت دقیق از حجم واقعی نوشیده‌شده استفاده کن.</p>
+    <div class="water-number"><span id="waterCount">0</span><small> ml</small></div>
     <div class="water-actions">
-      <button id="waterPlus" class="primary">+ یک لیوان</button>
+      <button id="water100" class="secondary">+100ml</button>
+      <button id="water300" class="secondary">+300ml</button>
+      <button id="water600" class="primary">+600ml</button>
       <button id="waterReset" class="secondary">صفر</button>
     </div>
   </article>
@@ -121,6 +123,25 @@
     <small>اصل انتخاب غذا: میوه و سبزی متنوع، غلات ترجیحاً کامل، پروتئین متنوع، و لبنیات یا جایگزین غنی‌شده.</small>
   </article>
 
+  <article class="card wide">
+    <h3>⏱️ ثبت سریع روز</h3>
+    <p class="muted">در هر نقطه فقط ۱۰ ثانیه وقت بگذار. سیستم زمان، انرژی، تشنگی، گرسنگی و آب مصرف‌شده را همراه رویداد ثبت می‌کند.</p>
+    <div class="checkin-grid">
+      <label>گرسنگی <input id="hunger" type="range" min="1" max="10" value="5"></label>
+      <label>تشنگی <input id="thirst" type="range" min="1" max="10" value="5"></label>
+    </div>
+    <div class="event-buttons">
+      <button class="secondary event-btn" data-event="صبح / شروع روز">صبح</button>
+      <button class="secondary event-btn" data-event="شروع تولید">شروع کار</button>
+      <button class="secondary event-btn" data-event="استراحت ۱۰:۰۰">استراحت ۱۰</button>
+      <button class="secondary event-btn" data-event="ناهار ۱۲:۴۵">ناهار</button>
+      <button class="secondary event-btn" data-event="استراحت ۱۵:۰۰">استراحت ۱۵</button>
+      <button class="secondary event-btn" data-event="خروج ۱۷:۰۰">خروج</button>
+      <button class="primary event-btn" data-event="گزارش شب">گزارش شب</button>
+    </div>
+    <div id="eventLog" class="event-log"></div>
+  </article>
+
   <article class="card">
     <h3>🎯 سه کار اصلی</h3>
     <div id="tasks" class="list"></div>
@@ -154,6 +175,7 @@
     <h3>📝 گزارش شب</h3>
     <textarea id="note" rows="5" placeholder="انرژی چطور بود؟ چی خوردی؟ چه چیزی خوب پیش رفت؟ کجا گیر داشتی؟"></textarea>
     <button id="saveNote" class="secondary full">ذخیره گزارش</button>
+    <button id="exportReport" class="primary full">📤 ساخت گزارش برای ChatGPT</button>
     <p id="saved" class="saved"></p>
   </article>
 
@@ -165,7 +187,7 @@
   </article>
 </section>
 
-<footer>ARMIN OS — نسخه 0.5 | اطلاعات روز در همین مرورگر ذخیره می‌شوند.</footer>
+<footer>ARMIN OS — نسخه 0.6 | اطلاعات روز در همین مرورگر ذخیره می‌شوند.</footer>
 </main>
 <script src="app.js"></script>
 </body>
