@@ -1,0 +1,10 @@
+{
+  "name":"ARMIN OS",
+  "short_name":"ARMIN OS",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#020617",
+  "theme_color":"#08111f",
+  "lang":"fa",
+  "dir":"rtl"
+}
