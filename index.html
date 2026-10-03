@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#08111f">
 <link rel="manifest" href="manifest.json">
 <meta name="description" content="ARMIN OS - مدیریت روز، انرژی، تغذیه، رشد و پروژه ربات">
-<title>ARMIN OS 0.7</title>
+<title>ARMIN OS 0.8</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,7 +17,7 @@
     <h1>ARMIN OS</h1>
     <p class="sub">مرکز فرماندهی زندگی، انرژی، تغذیه و پروژه ربات</p>
   </div>
-  <div class="badge">v0.7</div>
+  <div class="badge">v0.8</div>
 </header>
 
 <section class="hero card">
@@ -46,6 +46,7 @@
     <button class="primary" id="logNow">ثبت الان</button>
     <button class="secondary" id="copyReportTop">کپی گزارش</button>
   </div>
+  <div class="simple-rule">فردا فقط همین ۴ لحظه را ثبت کن: <b>صبح → ۱۰:۰۰ → ناهار → خروج</b>. ساعت ۱۵ فقط در صورت افت انرژی/گرسنگی ثبت کن.</div>
 </section>
 
 <section class="card planner">
@@ -82,8 +83,8 @@
 </section>
 
 <section class="grid">
-  <article class="card">
-    <h3>🧠 چک‌این انرژی</h3>
+  <article class="card optional-card">
+    <h3>🧠 جزئیات انرژی</h3>
     <label>انرژی <input id="energy" type="range" min="1" max="10" value="5"></label>
     <div class="metric"><span id="energyValue">5/10</span><span>انرژی</span></div>
     <label>حال امروز <input id="mood" type="range" min="1" max="10" value="5"></label>
@@ -92,7 +93,7 @@
     <div id="energyAdvice" class="advice">فعلاً وضعیتت متوسط است؛ برنامه را سبک و پایدار نگه دار.</div>
   </article>
 
-  <article class="card">
+  <article class="card optional-card">
     <h3>💧 آب / بطری ۶۰۰ml</h3>
     <p class="muted">بطری تو تا ۶۰۰ml علامت‌گذاری شده؛ برای ثبت دقیق از حجم واقعی نوشیده‌شده استفاده کن.</p>
     <div class="water-number"><span id="waterCount">0</span><small> ml</small></div>
@@ -104,7 +105,7 @@
     </div>
   </article>
 
-  <article class="card">
+  <article class="card optional-card">
     <h3>🍽️ تغذیه روز</h3>
     <label class="check"><input id="breakfast" type="checkbox"> صبحانه واقعی</label>
     <label class="check"><input id="lunch" type="checkbox"> ناهار متعادل</label>
@@ -115,14 +116,14 @@
     <p class="muted small">این‌ها شاخص اجرای غذا هستند؛ کالری و مقدار دقیق را بعد از دریافت قد، وزن و هدف بدنی شخصی‌سازی می‌کنیم.</p>
   </article>
 
-  <article class="card">
+  <article class="card optional-card">
     <h3>🚭 سیگار</h3>
     <p class="muted">هدف فعلی: ثبت واقعیت، نه سرزنش. بعداً یک برنامه کاهش/ترک مرحله‌ای می‌سازیم.</p>
     <div class="row"><input id="cigarettes" type="number" min="0" max="80" value="0" placeholder="تعداد امروز"><button id="saveCigs" class="secondary">ثبت</button></div>
     <p class="big-number" id="cigaretteTotal">0</p>
   </article>
 
-  <article class="card">
+  <article class="card optional-card">
     <h3>🚽 گوارش</h3>
     <label>دفع امروز <select id="bowel"><option value="0">هنوز نه</option><option value="1">بله</option></select></label>
     <label>سفتی مدفوع <select id="stool"><option value="hard">سفت / تکه‌ای</option><option value="normal">نسبتاً طبیعی</option><option value="loose">شل</option></select></label>
@@ -130,7 +131,7 @@
     <p class="muted small">فیبر را تدریجی بالا می‌بریم و آب را هم همزمان بیشتر می‌کنیم؛ اگر درد مداوم، خون در مدفوع، استفراغ یا کاهش وزن ناخواسته داری، ارزیابی پزشکی لازم است.</p>
   </article>
 
-  <article class="card">
+  <article class="card optional-card">
     <h3>🥗 الگوی غذای فردا</h3>
     <div class="meal"><b>06:20 صبحانه</b><span>تخم‌مرغ + نان سبوس‌دار + خیار/گوجه + یک میوه</span></div>
     <div class="meal"><b>10:00 استراحت</b><span>آب + یک میوه؛ اگر گرسنه بودی ماست یا مقدار کمی مغزها</span></div>
@@ -141,20 +142,19 @@
   </article>
 
   <article class="card wide">
-    <h3>⏱️ ثبت سریع روز</h3>
+    <h3>⏱️ ثبت سریع روز — فقط برای لحظه‌های مهم</h3>
     <p class="muted">در نقاط مهم شیفت فقط یک دکمه بزن. ساعت، وضعیت و آب همان لحظه همراه رویداد ذخیره می‌شوند.</p>
     <div class="checkin-grid">
       <label>گرسنگی <input id="hunger" type="range" min="1" max="10" value="5"></label>
       <label>تشنگی <input id="thirst" type="range" min="1" max="10" value="5"></label>
     </div>
-    <div class="event-buttons">
-      <button class="secondary event-btn" data-event="صبح / شروع روز">صبح</button>
-      <button class="secondary event-btn" data-event="شروع تولید">شروع کار</button>
-      <button class="secondary event-btn" data-event="استراحت ۱۰:۰۰">استراحت ۱۰</button>
-      <button class="secondary event-btn" data-event="ناهار ۱۲:۴۵">ناهار</button>
-      <button class="secondary event-btn" data-event="استراحت ۱۵:۰۰">استراحت ۱۵</button>
-      <button class="secondary event-btn" data-event="خروج ۱۷:۰۰">خروج</button>
-      <button class="primary event-btn" data-event="گزارش شب">گزارش شب</button>
+    <div class="event-buttons simple-events">
+      <button class="secondary event-btn" data-event="صبح / شروع روز">🌅 صبح</button>
+      <button class="secondary event-btn" data-event="شروع تولید">🏭 شروع کار</button>
+      <button class="secondary event-btn" data-event="استراحت ۱۰:۰۰">☕ ۱۰:۰۰</button>
+      <button class="primary event-btn" data-event="ناهار ۱۲:۴۵">🍽️ ناهار</button>
+      <button class="secondary event-btn conditional" data-event="استراحت ۱۵:۰۰">☕ ۱۵:۰۰ (در صورت نیاز)</button>
+      <button class="secondary event-btn" data-event="خروج ۱۷:۰۰">🚪 خروج</button>
     </div>
     <div id="eventLog" class="event-log"></div>
   </article>
@@ -167,7 +167,7 @@
     <div id="messageLog" class="message-log"></div>
   </article>
 
-  <article class="card">
+  <article class="card optional-card">
     <h3>🎯 سه کار اصلی</h3>
     <div id="tasks" class="list"></div>
     <div class="row">
@@ -176,7 +176,7 @@
     </div>
   </article>
 
-  <article class="card">
+  <article class="card optional-card">
     <h3>📚 رشد امروز</h3>
     <div class="mini-grid">
       <label>یادگیری (دقیقه)<input id="learnMin" type="number" min="0" max="240" value="20"></label>
@@ -187,7 +187,7 @@
     <div class="resource"><b>منبع امروز از Git.ir</b><a href="https://git.ir/article/personal-development-resources/" target="_blank" rel="noopener">منابع توسعه فردی و بهره‌وری</a><small>فقط یک محتوای کوتاه؛ نکته را یادداشت کن و همان روز اجرا کن.</small></div>
   </article>
 
-  <article class="card">
+  <article class="card optional-card">
     <h3>💰 خرج امروز</h3>
     <div class="row">
       <input id="spendAmount" inputmode="decimal" placeholder="مبلغ">
@@ -196,7 +196,7 @@
     <p class="big-number" id="spendTotal">0</p>
   </article>
 
-  <article class="card wide">
+  <article class="card wide optional-card">
     <h3>📝 گزارش شب</h3>
     <textarea id="note" rows="5" placeholder="انرژی چطور بود؟ چی خوردی؟ چه چیزی خوب پیش رفت؟ کجا گیر داشتی؟"></textarea>
     <button id="saveNote" class="secondary full">ذخیره گزارش</button>
@@ -204,7 +204,7 @@
     <p id="saved" class="saved"></p>
   </article>
 
-  <article class="card wide">
+  <article class="card wide optional-card">
     <h3>🔧 مسیر ربات</h3>
     <p>مرحله فعلی: ساخت سیستم شخصی و تبدیل زندگی واقعی به داده قابل استفاده.</p>
     <div class="progress"><span style="width:20%"></span></div>
