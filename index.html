@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#08111f">
+<link rel="manifest" href="manifest.json">
 <meta name="description" content="ARMIN OS - مدیریت روز، انرژی، تغذیه، رشد و پروژه ربات">
-<title>ARMIN OS 0.6</title>
+<title>ARMIN OS 0.7</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +17,7 @@
     <h1>ARMIN OS</h1>
     <p class="sub">مرکز فرماندهی زندگی، انرژی، تغذیه و پروژه ربات</p>
   </div>
-  <div class="badge">v0.6</div>
+  <div class="badge">v0.7</div>
 </header>
 
 <section class="hero card">
@@ -28,6 +29,22 @@
   <div class="hero-actions">
     <button id="buildPlan" class="primary">برنامه روز</button>
     <button id="focusBtn" class="secondary">تمرکز</button>
+  </div>
+</section>
+
+<section class="card live card-accent">
+  <div class="live-head">
+    <div>
+      <div class="eyebrow">SHIFT MODE</div>
+      <h3>⏱️ همین الان کجای روزیم؟</h3>
+      <p id="liveStatus" class="live-status">در حال محاسبه...</p>
+    </div>
+    <div id="liveClock" class="live-clock">--:--</div>
+  </div>
+  <div class="next-action" id="nextAction">...</div>
+  <div class="quick-actions">
+    <button class="primary" id="logNow">ثبت الان</button>
+    <button class="secondary" id="copyReportTop">کپی گزارش</button>
   </div>
 </section>
 
@@ -125,7 +142,7 @@
 
   <article class="card wide">
     <h3>⏱️ ثبت سریع روز</h3>
-    <p class="muted">در هر نقطه فقط ۱۰ ثانیه وقت بگذار. سیستم زمان، انرژی، تشنگی، گرسنگی و آب مصرف‌شده را همراه رویداد ثبت می‌کند.</p>
+    <p class="muted">در نقاط مهم شیفت فقط یک دکمه بزن. ساعت، وضعیت و آب همان لحظه همراه رویداد ذخیره می‌شوند.</p>
     <div class="checkin-grid">
       <label>گرسنگی <input id="hunger" type="range" min="1" max="10" value="5"></label>
       <label>تشنگی <input id="thirst" type="range" min="1" max="10" value="5"></label>
@@ -140,6 +157,14 @@
       <button class="primary event-btn" data-event="گزارش شب">گزارش شب</button>
     </div>
     <div id="eventLog" class="event-log"></div>
+  </article>
+
+  <article class="card wide">
+    <h3>💬 پیام برای دستیار</h3>
+    <p class="muted">چیزی را که دوست داری آخر شب با من بررسی کنیم همین‌جا ثبت کن؛ لازم نیست متن مرتب باشد.</p>
+    <textarea id="assistantMessage" rows="4" placeholder="مثلاً: ساعت 14 خیلی خوابم گرفت؛ ناهارم برنج و خورشت بود..."></textarea>
+    <button id="saveAssistantMessage" class="secondary full">ذخیره پیام</button>
+    <div id="messageLog" class="message-log"></div>
   </article>
 
   <article class="card">
@@ -187,7 +212,7 @@
   </article>
 </section>
 
-<footer>ARMIN OS — نسخه 0.6 | اطلاعات روز در همین مرورگر ذخیره می‌شوند.</footer>
+<footer>ARMIN OS — نسخه 0.7 | اطلاعات روز در همین مرورگر ذخیره می‌شوند.</footer>
 </main>
 <script src="app.js"></script>
 </body>
