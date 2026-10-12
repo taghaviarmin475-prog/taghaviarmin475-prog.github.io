@@ -1,0 +1,15 @@
+const $=s=>document.querySelector(s);
+const $$=s=>Array.from(document.querySelectorAll(s));
+function fmt(n){return Math.round(n).toLocaleString('fa-IR');}
+function showTab(id){$$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));$$('.panel').forEach(p=>p.classList.toggle('active',p.id===id));}
+$$('.tab').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+$$('[data-goto]').forEach(b=>b.addEventListener('click',()=>{showTab(b.dataset.goto);$('.tabs').scrollIntoView({behavior:'smooth',block:'start'})}));
+function calcLoyalty(){const amount=Math.max(0,Number($('#orderAmount').value)||0);const pct=Number($('#tier').value)||1;const cap=Math.max(0,Number($('#discountCap').value)||0);const discount=Math.min(amount*pct/100,cap);$('#discountResult').textContent=fmt(discount)+' تومان';$('#discountCaption').textContent='نرخ '+pct+'٪؛ سقف تخفیف '+fmt(cap)+' تومان. مثال ساختگی، نه سیاست شرکت.';}
+['orderAmount','tier','discountCap'].forEach(id=>$('#'+id).addEventListener('input',calcLoyalty));
+function calcFinance(){const usd=Math.max(0,Number($('#invoiceUsd').value)||0);const fx=Math.max(0,Number($('#fxRate').value)||0);const log=Math.max(0,Number($('#logistics').value)||0)/100;const buffer=Math.max(0,Number($('#fxBuffer').value)||0)/100;const base=usd*fx*(1+log);const reserve=base*buffer;$('#baseCost').textContent=fmt(base)+' تومان';$('#bufferCost').textContent=fmt(reserve)+' تومان';$('#totalCost').textContent=fmt(base+reserve)+' تومان';$('#overviewCost').textContent=(base+reserve>=1e9?(base+reserve/1e9).toFixed(2)+' میلیارد':fmt(base+reserve)+' تومان');}
+$('#calcFinance').addEventListener('click',calcFinance);
+$('#stockTable').querySelectorAll('tbody tr').forEach(row=>{const stock=Number(row.dataset.stock),min=Number(row.dataset.min);const td=row.querySelector('.stock-status');if(stock<min){td.innerHTML='<span class="status warm">بازبینی سفارش</span>';}else{td.innerHTML='<span class="status good">در محدوده نمونه</span>';}});$('#lowStockMetric').textContent=fmt($('#stockTable').querySelectorAll('.status.warm').length);
+const brief='طرح مفهومی مستقل برای بررسی سه فرصت دیجیتال در کسب‌وکار چاپ و بسته‌بندی: (۱) پایلوت باشگاه مشتریان برای افزایش سفارش مجدد با تخفیف دارای سقف و معیار اثربخشی؛ (۲) داشبورد آزمایشی مواد اولیه با حد سفارش و زمان تأمین؛ (۳) شبیه‌سازی هزینه خرید وارداتی با نرخ ارز و هزینه‌های جانبی. پیشنهاد می‌شود ابتدا یک پایلوت کوچک با داده غیرمحرمانه اجرا شود و مزیت نسبت به راهکارهای ساده سنجیده شود. استفاده از بلاکچین یا توکن قابل‌معامله از پیش فرض نشده است؛ هر مدل جذب سرمایه نیازمند بررسی حقوقی، مالی، امنیتی و تأیید شرکت خواهد بود. تمام ارقام و رکوردهای این دمو ساختگی‌اند و این پروژه وابسته یا مورد تأیید رسمی شرکت نیست.';
+function copyBrief(){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(brief).then(()=>alert('خلاصه پیشنهاد کپی شد.')).catch(()=>prompt('خلاصه را کپی کن:',brief));}else{prompt('خلاصه را کپی کن:',brief);}}
+$('#copyBrief').addEventListener('click',copyBrief);$('#copyBrief2').addEventListener('click',copyBrief);
+calcLoyalty();calcFinance();
